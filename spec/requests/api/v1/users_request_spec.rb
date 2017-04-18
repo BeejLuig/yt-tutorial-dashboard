@@ -28,16 +28,12 @@ RSpec.describe "Api::V1::Users", type: :request do
 
       end
 
-      it "returns the new user and a JWT token" do
-
-      end
+      pending "returns the new user and a JWT token"
     end
 
     describe "on error" do
 
-      it "requires a valid username or password" do
-
-      end
+      pending "requires a valid username or password"
     end
   end
 
