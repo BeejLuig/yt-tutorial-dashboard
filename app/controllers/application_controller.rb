@@ -5,11 +5,32 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_token!
-    #TODO
+    if request.env['HTTP_AUTHORIZATION']
+      begin
+        token = request.env['HTTP_AUTHORIZATION'].split(" ").last
+        decoded = Auth.decode_token(token)
+        @user_id = decoded[0]["user_id"]
+      rescue
+        error = [{message: "Token is invalid!"}]
+      end
+
+      if !current_user || !decoded || error
+        render json: {
+          errors: errors
+        }, status: 403
+      end
+
+    else
+      render json: {
+        errors: [
+          { message: "You must include a JWT token!"}
+        ]
+      }
+    end
   end
 
   def current_user
-    #TODO
+    @user ||= User.find_by(id: @user_id) if @user_id
   end
 
 end
