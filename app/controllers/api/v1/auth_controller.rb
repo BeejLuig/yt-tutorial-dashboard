@@ -20,4 +20,8 @@ class Api::V1::AuthController < ApplicationController
       }, status: 500
     end
   end
+
+  def refresh
+
+  end
 end
