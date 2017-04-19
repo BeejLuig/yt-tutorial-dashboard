@@ -116,5 +116,25 @@ RSpec.describe "Api::V1::Users", type: :request do
         expect(body['user']['password_digest']).to eq(nil)
       end
     end
+
+    describe "on error" do
+
+      it "returns the existing user (from headers JWT token) and a new JWT token" do
+
+        token = "123.abc.456.def"
+
+        post "/api/v1/auth/refresh",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer: #{token}"
+          }
+
+        body = JSON.parse(response.body)
+
+        expect(response.status).to eq(403)
+        expect(body['errors']).to eq([{"message" => "Token is invalid!"}])
+      end
+    end
+
   end
 end
