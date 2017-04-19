@@ -1,5 +1,7 @@
 class Api::V1::AuthController < ApplicationController
 
+  before_action :authenticate_token!, only: [:refresh]
+
   def login
     @user = User.find_by(username: params[:user][:username])
 
@@ -22,6 +24,6 @@ class Api::V1::AuthController < ApplicationController
   end
 
   def refresh
-
+    render 'users/user_with_token.json.jbuilder', user: current_user
   end
 end
