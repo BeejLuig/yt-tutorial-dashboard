@@ -1,7 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
   def create
-    # 1. create a user
     @user = User.new(user_params)
 
     if @user.save
@@ -11,6 +10,12 @@ class Api::V1::UsersController < ApplicationController
         errors: @user.errors
       }, status: 500
     end
+  end
+
+  def index
+    render json: {
+      message: "hello world"
+    }
   end
 
   private
