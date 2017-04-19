@@ -4,6 +4,13 @@ RSpec.describe "Api::V1::Users", type: :request do
 
   describe "POST /auth" do
 
+    before(:each) do
+      User.create(
+        username: "TestUser",
+        password: "password"
+      )
+    end
+
     describe "on success" do
 
       before(:each) do
@@ -77,7 +84,7 @@ RSpec.describe "Api::V1::Users", type: :request do
 
           expect(response.status).to eq(500)
           expect(body['errors']).to eq({
-            "password"=>["password does not match the provided username"]
+            "password"=>["Password does not match the provided username"]
             })
       end
     end
