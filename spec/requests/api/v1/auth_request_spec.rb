@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Users", type: :request do
 
-  describe "POST /auth" do
+  before(:each) do
+    @user = User.create(
+      username: "TestUser",
+      password: "password"
+    )
+  end
 
-    before(:each) do
-      User.create(
-        username: "TestUser",
-        password: "password"
-      )
-    end
+  describe "POST /auth" do
 
     describe "on success" do
 
@@ -90,5 +90,31 @@ RSpec.describe "Api::V1::Users", type: :request do
     end
   end
 
+  describe "POST /auth/refresh" do
 
+    describe "on success" do
+
+      before(:each) do
+        token = Auth.create_token(@user.id)
+
+        post "/api/v1/auth/refresh",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer: #{token}"
+          }
+
+        @response = response
+      end
+
+      it "returns the existing user (from headers JWT token) and a new JWT token" do
+        body = JSON.parse(response.body)
+
+        expect(@response.status).to eq(200)
+        expect(body['token']).not_to eq(nil)
+        expect(body['user']['id']).not_to eq(nil)
+        expect(body['user']['username']).to eq('TestUser')
+        expect(body['user']['password_digest']).to eq(nil)
+      end
+    end
+  end
 end
