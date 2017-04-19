@@ -11,10 +11,10 @@ class ApplicationController < ActionController::API
         decoded = Auth.decode_token(token)
         @user_id = decoded[0]["user_id"]
       rescue
-        error = [{message: "Token is invalid!"}]
+        errors = [{message: "Token is invalid!"}]
       end
 
-      if !current_user || !decoded || error
+      if !current_user || !decoded || errors
         render json: {
           errors: errors
         }, status: 403
