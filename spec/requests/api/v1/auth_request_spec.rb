@@ -55,7 +55,7 @@ RSpec.describe "Api::V1::Users", type: :request do
 
           body = JSON.parse(response.body)
 
-          expect(response.status).to eq(403)
+          expect(response.status).to eq(500)
           expect(body['errors']).to eq({
             "username"=>["Unable to find a user with the provided username"]
             })
@@ -75,7 +75,7 @@ RSpec.describe "Api::V1::Users", type: :request do
 
           body = JSON.parse(response.body)
 
-          expect(response.status).to eq(403)
+          expect(response.status).to eq(500)
           expect(body['errors']).to eq({
             "password"=>["password does not match the provided username"]
             })
