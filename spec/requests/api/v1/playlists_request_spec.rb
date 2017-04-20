@@ -31,8 +31,8 @@ RSpec.describe "Api::V1::Playlists", type: :request do
     responses << response
     response_bodies << JSON.parse(response.body)
 
-    responses.each { |r| expect(r).have_http_status(403) }
-    response_bodies.each { |body| expect(body["errors"]).to eq([{ "message" => "Token is invalid!"}]) }
+    responses.each { |r| expect(r).to have_http_status(403) }
+    response_bodies.each { |body| expect(body["errors"]).to eq([{ "message" => "You must include a JWT token!"}]) }
 
   end
 
