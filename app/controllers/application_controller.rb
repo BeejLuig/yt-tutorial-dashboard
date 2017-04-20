@@ -25,7 +25,7 @@ class ApplicationController < ActionController::API
         errors: [
           { message: "You must include a JWT token!"}
         ]
-      }
+      }, status: 403
     end
   end
 
