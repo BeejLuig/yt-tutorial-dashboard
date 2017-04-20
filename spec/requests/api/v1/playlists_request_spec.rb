@@ -61,7 +61,7 @@ RSpec.describe "Api::V1::Playlists", type: :request do
           ]
         }
       ]
-    }
+    }.to_json
   end
 
   it "requires all routes to have a token" do
