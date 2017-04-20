@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       post '/auth/refresh', to: "auth#refresh"
 
       # /api/v1/playlists
-      resources :playlists, only: [:index, :create]
+      resources :playlists, only: [:index, :create, :show]
     end
   end
 end
