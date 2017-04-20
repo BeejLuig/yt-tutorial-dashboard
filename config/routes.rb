@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
       post '/auth', to: "auth#login"
       post '/auth/refresh', to: "auth#refresh"
+
+      # /api/v1/playlists
+      resources :playlists, only: [:index, :create]
     end
   end
 end
