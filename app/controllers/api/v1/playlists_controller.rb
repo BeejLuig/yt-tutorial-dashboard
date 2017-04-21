@@ -21,7 +21,16 @@ class Api::V1::PlaylistsController < ApplicationController
   end
 
   def show
-
+    @playlist = Playlist.find_by(id: params[:id])
+    if @playlist
+      render 'playlists/playlist.json.jbuilder', playlists: @playlist
+    else
+      render json: {
+        errors: {
+          playlist: ["No playlist found with the given id"]
+        }
+      }
+    end
   end
 
   private
