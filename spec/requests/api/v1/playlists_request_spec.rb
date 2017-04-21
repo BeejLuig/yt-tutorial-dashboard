@@ -128,8 +128,30 @@ RSpec.describe "Api::V1::Playlists", type: :request do
     end
 
     describe "#show" do
-      pending "it does not return all playlists"
-      pending "it returns an array of playlists belonging to a logged in user"
+      it "on success, returns a hash of playlist information" do
+        @playlist = Playlist.first
+        get "/api/v1/playlists/#{@playlist.id}", headers: @token_headers
+        body = JSON.parse(response.body)
+        expect(body).to eq(
+          {
+            "id"=>@playlist.id,
+            "title"=>"title",
+            "playlist_id"=>"abcd123",
+            "description"=>"",
+            "thumbnail_url"=>"this.jpg",
+            "user_id"=>@playlist.user.id
+          }
+        )
+      end
+
+      it "on failure, returns an error message: 'No playlist found with the given id'" do
+        get "/api/v1/playlists/0", headers: @token_headers
+        body = JSON.parse(response.body)
+        expect(body).to eq(
+          {"errors" => { "playlist" => ["No playlist found with the given id"] } }
+        )
+      end
+
     end
   end
 
