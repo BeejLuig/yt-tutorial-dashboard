@@ -84,6 +84,7 @@ RSpec.describe "Api::V1::Playlists", type: :request do
         expect(body).to eq(
         [
           {
+            "id"=>@user.playlists.last.id,
             "title"=>"title",
             "playlist_id"=>"abcd123",
             "description"=>"",
@@ -104,7 +105,14 @@ RSpec.describe "Api::V1::Playlists", type: :request do
 
         expect(Playlist.all.count).not_to eq(playlist_count)
         expect(body).to eq(
-          {"title"=>"My Playlist", "playlist_id"=>"123456", "description"=>"", "thumbnail_url"=>"demo.jpg", "user_id"=>@user.id}
+          {
+            "id"=>@user.playlists.last.id,
+            "title"=>"My Playlist",
+            "playlist_id"=>"123456",
+            "description"=>"",
+            "thumbnail_url"=>"demo.jpg",
+            "user_id"=>@user.id
+          }
         )
       end
 
