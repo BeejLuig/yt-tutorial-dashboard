@@ -50,4 +50,20 @@ RSpec.describe "Api::V1::Videos", type: :request do
       )
     end
   end
+
+  describe "#reset_videos" do
+
+    it "sets complete? status to false for all videos in the given playlist" do
+      @playlist.videos.each do |video|
+        expect(video.complete?).to eq(true)
+      end
+
+      post "/api/v1/playlists/#{@playlist.id}/reset_videos", headers: @token_headers
+      @playlist.videos.each do |video|
+        expect(video.complete?).to eq(false)
+      end
+    end
+
+    pending "returns the updated array of videos"
+  end
 end

@@ -153,26 +153,5 @@ RSpec.describe "Api::V1::Playlists", type: :request do
       end
     end
 
-    describe "#reset_videos" do
-
-      before(:each) do
-        @playlist = @user.playlists.create(title: "title", playlist_id: "abcd123", description: "", thumbnail_url: "this.jpg")
-        @playlist.videos.create(title: "title1", video_id: "12345", description: "description1", thumbnail_url: "url1.jpg", complete?: true)
-        @playlist.videos.create(title: "title2", video_id: "23456", description: "description2", thumbnail_url: "url2.jpg", complete?: true)
-      end
-
-      it "sets complete? status to false for all videos in the given playlist" do
-        @playlist.videos.each do |video|
-          expect(video.complete?).to eq(true)
-        end
-
-        post "/api/v1/playlists/#{@playlist.id}/reset_videos", headers: @token_headers
-        @playlist.videos.each do |video|
-          expect(video.complete?).to eq(false)
-        end
-      end
-
-      pending "returns the updated array of videos"
-    end
   end
 end
