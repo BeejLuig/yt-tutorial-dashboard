@@ -4,6 +4,10 @@ RSpec.describe "Api::V1::Playlists", type: :request do
 
 
   before(:each) do
+    User.destroy_all
+    Playlist.destroy_all
+    Video.destroy_all
+
     @user = User.create(
       username: "NewUser",
       password: "password"
@@ -84,19 +88,33 @@ RSpec.describe "Api::V1::Playlists", type: :request do
   describe "actions" do
     before(:each) do
       @user.playlists.create(title: "title", playlist_id: "abcd123", description: "", thumbnail_url: "this.jpg")
-
     end
 
     describe "#index" do
       it "it does not return all playlists" do
-
+        user2 = User.create(username: "User2", password: "password")
+        user2.playlists.create(title: "title2", playlist_id: "abcd1234", description: "", thumbnail_url: "this2.jpg")
         get '/api/v1/playlists', headers: @token_headers
         body = JSON.parse(response.body)
-        expect(body.count).not_to eq(3)
+        expect(body.count).not_to eq(2)
         expect(body.count).not_to eq("")
       end
 
-      pending "it returns an array of playlists belonging to a logged in user on success"
+      it "returns an array of playlists belonging to a logged in user on success" do
+        get '/api/v1/playlists', headers: @token_headers
+        body = JSON.parse(response.body)
+        expect(body).to eq(
+        [
+          {
+            "title"=>"title",
+            "playlist_id"=>"abcd123",
+            "description"=>"",
+            "thumbnail_url"=>"this.jpg",
+            "user_id"=>@user.id
+          }
+        ]
+      )
+      end
     end
 
     describe "#create" do
