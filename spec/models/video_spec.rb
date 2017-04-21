@@ -18,9 +18,6 @@ RSpec.describe Video, type: :model do
     @empty_video = @playlist.videos.create()
   end
 
-  it "locked? defaults to true" do
-    expect(@valid_video.locked?).to eq(true)
-  end
   it "complete? defaults to false" do
     expect(@valid_video.complete?).to eq(false)
   end
