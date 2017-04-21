@@ -28,7 +28,7 @@ RSpec.describe "Api::V1::Playlists", type: :request do
         playlist_id: "123456",
         description: "",
         thumbnail_url: "demo.jpg",
-        videos: [
+        videos_attributes: [
           {
             title: "My first video",
             video_id: "jklior",
@@ -97,9 +97,9 @@ RSpec.describe "Api::V1::Playlists", type: :request do
     end
 
     describe "#create" do
+
       it "creates a new instance of Playlist on success" do
         playlist_count = Playlist.all.count
-
         post '/api/v1/playlists', params: @params, headers: @token_headers
         body = JSON.parse(response.body)
 
@@ -117,7 +117,12 @@ RSpec.describe "Api::V1::Playlists", type: :request do
       end
 
       it "creates a new Video instance for each video belonging to the playlist" do
+        video_count = Video.all.count
 
+        post '/api/v1/playlists', params: @params, headers: @token_headers
+        body = JSON.parse(response.body)
+
+        expect(Video.all.count).not_to eq(video_count)
       end
 
     end
