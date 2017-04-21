@@ -23,48 +23,26 @@ RSpec.describe "Api::V1::Playlists", type: :request do
     }
 
     @params = {
-      playlists: [
-        {
-          title: "My Playlist",
-          playlist_id: "123456",
-          description: "",
-          thumbnail_url: "demo.jpg",
-          videos: [
-            {
-              title: "My first video",
-              video_id: "jklior",
-              description: "",
-              thumbnail_url: "vid1.jpg"
-            },
-            {
-              title: "My second video",
-              video_id: "lkjfda",
-              description: "",
-              thumbnail_url: "vid2.jpg"
-            }
-          ]
-        },
-        {
-          title: "My Other Playlist",
-          playlist_id: "654321",
-          description: "",
-          thumbnail_url: "demo2.jpg",
-          videos: [
-            {
-              title: "My cool video",
-              video_id: "zxvvds",
-              description: "",
-              thumbnail_url: "vid3.jpg"
-            },
-            {
-              title: "My other video",
-              video_id: "oiurew",
-              description: "",
-              thumbnail_url: "vid4.jpg"
-            }
-          ]
-        }
-      ]
+      playlist: {
+        title: "My Playlist",
+        playlist_id: "123456",
+        description: "",
+        thumbnail_url: "demo.jpg",
+        videos: [
+          {
+            title: "My first video",
+            video_id: "jklior",
+            description: "",
+            thumbnail_url: "vid1.jpg"
+          },
+          {
+            title: "My second video",
+            video_id: "lkjfda",
+            description: "",
+            thumbnail_url: "vid2.jpg"
+          }
+        ]
+      }
     }.to_json
   end
 
@@ -125,6 +103,9 @@ RSpec.describe "Api::V1::Playlists", type: :request do
         body = JSON.parse(response.body)
 
         expect(Playlist.all.count).not_to eq(playlist_count)
+        expect(body).to eq(
+          {"title"=>"My Playlist", "playlist_id"=>"123456", "description"=>"", "thumbnail_url"=>"demo.jpg", "user_id"=>@user.id}
+        )
       end
 
       it "creates a new Video instance for each video belonging to the playlist" do
