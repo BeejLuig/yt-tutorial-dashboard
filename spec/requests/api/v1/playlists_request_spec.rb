@@ -118,8 +118,19 @@ RSpec.describe "Api::V1::Playlists", type: :request do
     end
 
     describe "#create" do
-      pending "creates a new instance of Playlist on success"
-      pending "creates a new Video instance for each video belonging to the playlist"
+      it "creates a new instance of Playlist on success" do
+        playlist_count = Playlist.all.count
+
+        post '/api/v1/playlists', params: @params, headers: @token_headers
+        body = JSON.parse(response.body)
+
+        expect(Playlist.all.count).not_to eq(playlist_count)
+      end
+
+      it "creates a new Video instance for each video belonging to the playlist" do
+
+      end
+
     end
 
     describe "#show" do
