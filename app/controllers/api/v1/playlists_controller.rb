@@ -7,7 +7,17 @@ class Api::V1::PlaylistsController < ApplicationController
   end
 
   def create
+    @playlist = current_user.playlists.new(
+      title: params[:playlist][:title],
+      playlist_id: params[:playlist][:playlist_id],
+      description: params[:playlist][:description],
+      thumbnail_url: params[:playlist][:thumbnail_url]
+    )
+    if @playlist.save
+      render 'playlists/playlist.json.jbuilder', playlists: @playlist
+    else
 
+    end
   end
 
   private
