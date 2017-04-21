@@ -151,8 +151,6 @@ RSpec.describe "Api::V1::Playlists", type: :request do
           {"errors" => { "playlist" => ["No playlist found with the given id"] } }
         )
       end
-
     end
   end
-
 end
