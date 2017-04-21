@@ -20,6 +20,10 @@ class Api::V1::PlaylistsController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   private
   def playlist_params
     params.require(:playlist).permit(:title, :playlist_id, :description, :thumbnail_url, videos_attributes: [:title, :video_id, :description, :thumbnail_url])
