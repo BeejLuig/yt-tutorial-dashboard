@@ -11,9 +11,9 @@ Rails.application.routes.draw do
       post '/auth/refresh', to: "auth#refresh"
 
       # /api/v1/playlists
-      post '/playlists/:id/reset_videos', to: 'playlists#reset_videos'
       resources :playlists, only: [:index, :create, :show] do
 
+        post '/reset_videos', to: 'videos#reset_videos'
       # /api/v1/playlists/:id/videos
         resources :videos, only: [:index]
       end
