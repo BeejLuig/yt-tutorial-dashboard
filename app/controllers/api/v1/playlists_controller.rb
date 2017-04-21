@@ -16,7 +16,9 @@ class Api::V1::PlaylistsController < ApplicationController
     if @playlist.save
       render 'playlists/playlist.json.jbuilder', playlists: @playlist
     else
-
+      render json: {
+        errors: @playlist.errors
+      }, status: 500
     end
   end
 
