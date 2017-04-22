@@ -155,7 +155,7 @@ RSpec.describe "Api::V1::Playlists", type: :request do
 
     describe "#update" do
       params = {
-        video: {
+        playlist: {
           description: "I have a description now"
         }
       }.to_json
@@ -168,10 +168,10 @@ RSpec.describe "Api::V1::Playlists", type: :request do
       end
 
       it "on failure, returns an error message: 'No playlist found with the given id'" do
-        get "/api/v1/playlists/0", headers: @token_headers
+        patch "/api/v1/playlists/0", params: params, headers: @token_headers
         body = JSON.parse(response.body)
         expect(body).to eq(
-          {"errors" => { "playlist" => ["No playlist found with the given id"] } }
+          {"errors" => { "playlist" => ["Playlist failed to update"] } }
         )
       end
     end
@@ -185,10 +185,10 @@ RSpec.describe "Api::V1::Playlists", type: :request do
       end
 
       it "on failure, returns an error message: 'No playlist found with the given id'" do
-        get "/api/v1/playlists/0", headers: @token_headers
+        delete "/api/v1/playlists/0", headers: @token_headers
         body = JSON.parse(response.body)
         expect(body).to eq(
-          {"errors" => { "playlist" => ["No playlist found with the given id"] } }
+          {"errors" => { "playlist" => ["Playlist failed to delete"] } }
         )
       end
     end
