@@ -1,11 +1,6 @@
 class Api::V1::PlaylistsController < ApplicationController
   before_action :authenticate_token!, only: [:index, :create, :show]
 
-  def index
-    @playlists = current_user.playlists
-    render 'playlists/playlists.json.jbuilder', playlists: @playlists
-  end
-
   def create
     @playlist = current_user.playlists.new(playlist_params)
     @playlist.videos.each do |video|
@@ -20,6 +15,42 @@ class Api::V1::PlaylistsController < ApplicationController
     end
   end
 
+  def index
+    @playlists = current_user.playlists
+    render 'playlists/playlists.json.jbuilder', playlists: @playlists
+  end
+
+  def update
+    @playlist = Playlist.find_by(id: params[:id])
+    if @playlist && @playlist.update(playlist_params)
+      render 'playlists/playlist.json.jbuilder', playlists: @playlist
+    else
+      render json: {
+        errors: {
+          playlist: ["Playlist failed to update"]
+        }
+      }
+    end
+  end
+
+  def destroy
+    @playlist = Playlist.find_by(id: params[:id])
+    if @playlist
+      @playlist.destroy
+      render json: {
+        success: {
+          playlist: ["Playlist successfully deleted"]
+        }
+      }
+    else
+      render json: {
+        errors: {
+          playlist: ["Playlist failed to delete"]
+        }
+      }
+    end
+  end
+
   def show
     @playlist = Playlist.find_by(id: params[:id])
     if @playlist
@@ -31,14 +62,6 @@ class Api::V1::PlaylistsController < ApplicationController
         }
       }
     end
-  end
-
-  def update
-
-  end
-
-  def destroy
-
   end
 
   private
