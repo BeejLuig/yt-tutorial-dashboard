@@ -89,7 +89,7 @@ RSpec.describe "Api::V1::Videos", type: :request do
       @video = @playlist.videos.first
       expect(@video.complete?).to be_falsey
 
-      post "/api/v1/videos/:id/complete"
+      post "/api/v1/videos/#{@video.id}/complete", headers: @token_headers
       body = JSON.parse(response.body)
 
       expect(body).to include("title1")
