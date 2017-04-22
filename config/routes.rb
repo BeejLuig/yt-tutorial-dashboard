@@ -18,6 +18,8 @@ Rails.application.routes.draw do
         resources :videos, only: [:index]
       end
 
+      # /api/v1/videos/:id/complete
+      post '/videos/:id/complete', to: 'videos#complete'
     end
   end
 
