@@ -153,5 +153,45 @@ RSpec.describe "Api::V1::Playlists", type: :request do
       end
     end
 
+    describe "#update" do
+      params = {
+        video: {
+          description: "I have a description now"
+        }
+      }.to_json
+
+      it "on success, returns a hash of updated playlist information" do
+        @playlist = Playlist.first
+        patch "/api/v1/playlists/#{@playlist.id}", params: params, headers: @token_headers
+        body = JSON.parse(response.body)
+        expect(body).to include("description"=>"I have a description now")
+      end
+
+      it "on failure, returns an error message: 'No playlist found with the given id'" do
+        get "/api/v1/playlists/0", headers: @token_headers
+        body = JSON.parse(response.body)
+        expect(body).to eq(
+          {"errors" => { "playlist" => ["No playlist found with the given id"] } }
+        )
+      end
+    end
+
+    describe "#destroy" do
+      it "on success, returns a success message" do
+        @playlist = Playlist.first
+        delete "/api/v1/playlists/#{@playlist.id}", headers: @token_headers
+        body = JSON.parse(response.body)
+        expect(body).to include("success")
+      end
+
+      it "on failure, returns an error message: 'No playlist found with the given id'" do
+        get "/api/v1/playlists/0", headers: @token_headers
+        body = JSON.parse(response.body)
+        expect(body).to eq(
+          {"errors" => { "playlist" => ["No playlist found with the given id"] } }
+        )
+      end
+    end
+
   end
 end
