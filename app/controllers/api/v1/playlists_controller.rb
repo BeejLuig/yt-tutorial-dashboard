@@ -1,5 +1,5 @@
 class Api::V1::PlaylistsController < ApplicationController
-  before_action :authenticate_token!, only: [:index, :create, :show]
+  before_action :authenticate_token!
 
   def create
     @playlist = current_user.playlists.new(playlist_params)
@@ -22,20 +22,28 @@ class Api::V1::PlaylistsController < ApplicationController
 
   def update
     @playlist = Playlist.find_by(id: params[:id])
-    if @playlist && @playlist.update(playlist_params)
-      render 'playlists/playlist.json.jbuilder', playlists: @playlist
+
+    if @playlist && @playlist.user == current_user
+      if @playlist.update(playlist_params)
+        render 'playlists/playlist.json.jbuilder', playlists: @playlist
+      else
+        render json: {
+          errors: @playlist.errors
+        }, status: 500
+      end
     else
       render json: {
         errors: {
-          playlist: ["Playlist failed to update"]
-        }
+          playlist: ["No playlist found with given id"]
+        }, status: 500
       }
     end
   end
 
   def destroy
     @playlist = Playlist.find_by(id: params[:id])
-    if @playlist
+
+    if @playlist && @playlist.user == current_user
       @playlist.destroy
       render json: {
         success: {
@@ -47,20 +55,20 @@ class Api::V1::PlaylistsController < ApplicationController
         errors: {
           playlist: ["Playlist failed to delete"]
         }
-      }
+      }, status: 500
     end
   end
 
   def show
     @playlist = Playlist.find_by(id: params[:id])
-    if @playlist
+    if @playlist && @playlist.user == current_user
       render 'playlists/playlist.json.jbuilder', playlists: @playlist
     else
       render json: {
         errors: {
           playlist: ["No playlist found with the given id"]
         }
-      }
+      }, status: 500
     end
   end
 
