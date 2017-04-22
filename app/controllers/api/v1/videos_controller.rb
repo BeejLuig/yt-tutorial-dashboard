@@ -1,9 +1,10 @@
 class Api::V1::VideosController < ApplicationController
+  before_action :authenticate_token!
 
   def index
     playlist = Playlist.find_by(id: params[:playlist_id])
 
-    if playlist && @videos = playlist.videos
+    if playlist && playlist.user == current_user && @videos = playlist.videos
       render 'videos/videos.json.jbuilder', videos: @videos
     else
       render json: {
@@ -17,7 +18,7 @@ class Api::V1::VideosController < ApplicationController
   def reset_videos
     playlist = Playlist.find_by(id: params[:playlist_id])
 
-    if playlist
+    if playlist && playlist.user == current_user
       @videos = playlist.videos
       @videos.update(complete?: false)
       render 'videos/videos.json.jbuilder', videos: @videos
@@ -32,7 +33,7 @@ class Api::V1::VideosController < ApplicationController
 
   def complete
     @video = Video.find_by(id: params[:id])
-    if @video && !@video.complete?
+    if @video && current_user.videos.include?(@video)
       @video.update(complete?: true)
       render 'videos/video.json.jbuilder', video: @video
     else
