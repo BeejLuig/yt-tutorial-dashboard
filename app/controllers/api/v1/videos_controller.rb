@@ -24,7 +24,21 @@ class Api::V1::VideosController < ApplicationController
     else
       render json: {
         errors: {
-          videos: ["No videos found with the given id"]
+          videos: ["No videos found with the given playlist id"]
+        }
+      }
+    end
+  end
+
+  def complete
+    @video = Video.find_by(id: params[:id])
+    if @video && !@video.complete?
+      @video.update(complete?: true)
+      render 'videos/video.json.jbuilder', video: @video
+    else
+      render json: {
+        errors: {
+          videos: ["No video found with the given id"]
         }
       }
     end
