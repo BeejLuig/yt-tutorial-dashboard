@@ -82,4 +82,18 @@ RSpec.describe "Api::V1::Videos", type: :request do
       expect(body[1]).to include("title" => "title2")
     end
   end
+
+  describe "#complete" do
+
+    it "sets complete? status to true for given video" do
+      @video = @playlist.videos.first
+      expect(@video.complete?).to be_falsey
+
+      post "/api/v1/videos/:id/complete"
+      body = JSON.parse(response.body)
+
+      expect(body).to include("title1")
+      expect(body["complete?"]).to be_truthy
+    end
+  end
 end
