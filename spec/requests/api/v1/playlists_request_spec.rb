@@ -170,9 +170,7 @@ RSpec.describe "Api::V1::Playlists", type: :request do
       it "on failure, returns an error message: 'No playlist found with the given id'" do
         patch "/api/v1/playlists/0", params: params, headers: @token_headers
         body = JSON.parse(response.body)
-        expect(body).to eq(
-          {"errors" => { "playlist" => ["Playlist failed to update"] } }
-        )
+        expect(body).to include("errors")
       end
     end
 
