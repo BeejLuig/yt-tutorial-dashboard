@@ -5,13 +5,13 @@ require_relative 'config/environment'
 run Rails.application
 
 require 'rack/cors'
+
 use Rack::Cors do
 
-  # allow all origins in development
-  allow do
-    origins '*'
-    resource '*',
-        :headers => :any,
-        :methods => [:get, :post, :delete, :put, :options]
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins 'https://yt-tutorial-dashboard.herokuapp.com/',
+              'http://localhost:3000/'
+      resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :patch, :options, :head]
+    end
   end
-end 
