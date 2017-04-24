@@ -14,3 +14,4 @@ use Rack::Cors do
         :headers => :any,
         :methods => [:get, :post, :delete, :put, :options]
   end
+end 
