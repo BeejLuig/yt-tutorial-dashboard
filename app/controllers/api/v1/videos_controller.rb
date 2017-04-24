@@ -8,9 +8,7 @@ class Api::V1::VideosController < ApplicationController
       render 'videos/videos.json.jbuilder', videos: @videos
     else
       render json: {
-        errors: {
-          videos: ["No videos found with the given playlist id"]
-        }
+        errors: ["No videos found with the given playlist id"]
       }
     end
   end
@@ -24,9 +22,7 @@ class Api::V1::VideosController < ApplicationController
       render 'videos/videos.json.jbuilder', videos: @videos
     else
       render json: {
-        errors: {
-          videos: ["No videos found with the given playlist id"]
-        }
+        errors: ["No videos found with the given playlist id"]
       }
     end
   end
@@ -38,9 +34,7 @@ class Api::V1::VideosController < ApplicationController
       render 'videos/video.json.jbuilder', video: @video
     else
       render json: {
-        errors: {
-          videos: ["No video found with the given id"]
-        }
+        errors: ["No video found with the given id"]
       }
     end
   end

@@ -46,15 +46,11 @@ class Api::V1::PlaylistsController < ApplicationController
     if @playlist && @playlist.user == current_user
       @playlist.destroy
       render json: {
-        success: {
-          playlist: ["Playlist successfully deleted"]
-        }
+        success: ["Playlist successfully deleted"]
       }
     else
       render json: {
-        errors: {
-          playlist: ["Playlist failed to delete"]
-        }
+        errors: ["Playlist failed to delete"]
       }, status: 500
     end
   end
@@ -65,9 +61,7 @@ class Api::V1::PlaylistsController < ApplicationController
       render 'playlists/playlist.json.jbuilder', playlists: @playlist
     else
       render json: {
-        errors: {
-          playlist: ["No playlist found with the given id"]
-        }
+        errors: ["No playlist found with the given id"]
       }, status: 500
     end
   end
