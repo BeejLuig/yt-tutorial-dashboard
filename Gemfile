@@ -22,13 +22,16 @@ gem 'dotenv-rails'
 #Use JWT for token authentication
 gem 'jwt', '~>1.5.6'
 # Use ActiveModel has_secure_password
- gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
+
+#Use foreman for local cross-origin resource sharing
+gem 'foreman', '~> 0.82.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
