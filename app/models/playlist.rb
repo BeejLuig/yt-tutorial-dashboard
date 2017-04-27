@@ -4,5 +4,5 @@ class Playlist < ApplicationRecord
   has_many :videos, dependent: :destroy
   accepts_nested_attributes_for :videos
 
-  validates :title, :playlist_id, :thumbnail_url, presence: true
+  validates :title, :playlist_id, :thumbnail_url, :channel_title, presence: true
 end
