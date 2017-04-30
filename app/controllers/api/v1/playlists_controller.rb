@@ -24,7 +24,14 @@ class Api::V1::PlaylistsController < ApplicationController
     @playlist = Playlist.find_by(id: params[:id])
 
     if @playlist && @playlist.user == current_user
-      if @playlist.update(playlist_params)
+      if @playlist.update(title: playlist_params[:title], description: playlist_params[:description], thumbnail_url: playlist_params[:thumbnail_url])
+        playlist_params[:videos_attributes].each do |video|
+          if oldVideo = @playlist.videos.find_by(video_id: video[:video_id])
+            oldVideo.update(video)
+          else
+            @playlist.videos.create(video)
+          end
+        end
         render 'playlists/playlist.json.jbuilder', playlists: @playlist
       else
         render json: {
