@@ -1,1 +1,1 @@
-json.(@video, :id, :title, :video_id, :description, :thumbnail_url, :playlist_id, :complete?)
+json.(@video, :id, :title, :video_id, :description, :thumbnail_url, :playlist_id, :complete?, :is_active)
