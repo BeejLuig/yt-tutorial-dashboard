@@ -15,11 +15,14 @@ Rails.application.routes.draw do
 
         post '/reset_videos', to: 'videos#reset_videos'
       # /api/v1/playlists/:id/videos
-        resources :videos, only: [:index]
+        resources :videos, only: [:index, :show]
       end
 
       # /api/v1/videos/:id/complete
       post '/videos/:id/complete', to: 'videos#complete'
+
+      # /api/v1/videos/:id/activate
+      post '/videos/:id/activate', to: 'videos#activate'
     end
   end
 
