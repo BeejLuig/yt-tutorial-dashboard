@@ -4,7 +4,9 @@ This application is a back-end demo using React/Redux. It works locally in conju
 
 This app was created as a project for the Flatiron School's Fullstack Web Development Program. 
 
-In order to use this application, you will need a [YouTube API key](https://developers.google.com/youtube/v3/getting-started). 
+In order to use this application, you will need a [YouTube API key](https://developers.google.com/youtube/v3/getting-started).
+
+To see the app in action, check out my [blog post](http://bjcantlupe.com/2017/05/01/yt_tutorial_dashboard_react_redux_and_rails/)
 
 ## Installation
 
