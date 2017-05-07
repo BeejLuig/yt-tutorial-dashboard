@@ -1,6 +1,6 @@
 # YT Tutorial Dashboard - API App
 
-This application is a back-end demo using React/Redux. It works locally in conjunction with the [React YT Tutorial Dashboard Client](https://github.com/BeejLuig/react-yt-tutorial-dashboard). 
+This application is a back-end demo using React/Redux. It works locally in conjunction with the [React YT Tutorial Dashboard Client](https://github.com/BeejLuig/react-yt-tutorial-dashboard). See the deployed React app [here](https://yttd.herokuapp.com/)
 
 This app was created as a project for the Flatiron School's Fullstack Web Development Program. 
 
